@@ -1,5 +1,6 @@
 import pandas as pd
 from extract_dataframe import read_json,TweetDfExtractor
+import re
 class Clean_Tweets:
     """
     The PEP8 Standard AMAZING!!!
@@ -59,4 +60,16 @@ class Clean_Tweets:
 
         df.drop(unwanted_rows ,inplace=True)
         
+        return df
+    def remove_mentions_from_frame(self,df:pd.DataFrame)->pd.DataFrame:
+        def remove_mention_from_tweet(p)->str:
+            text_with_mentions_removed= re.sub('(@[A-Za-z]+[A-Za-z0-9-_]+)', '', text)
+            return text_with_mentions_removed
+        df["clean_text"]= df.full_text.apply(remove_mention_from_tweet)
+        return df
+    def remove_hastags_from_tweet(self,df:pd.DataFrame)->pd.DataFrame:
+        def remove_hashtag_from_tweet(p)->str:
+            text_with_mentions_removed= re.sub('(#[A-Za-z]+[A-Za-z0-9-_]+)', '', text)
+            return text_with_mentions_removed
+        df["clean_text"]= df.clean_text.apply(remove_mention_from_tweet)
         return df
