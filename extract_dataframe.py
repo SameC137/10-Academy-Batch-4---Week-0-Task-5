@@ -50,7 +50,7 @@ class TweetDfExtractor:
             try:
                 text.append(i["retweeted_status"]["extended_tweet"]["full_text"])
             except KeyError:
-                text.append('')
+                text.append(i["text"])
         return text
        
     
@@ -138,7 +138,6 @@ class TweetDfExtractor:
         mentions=[]
         for i in self.tweets_list:
             mentions.append(i["entities"]["user_mentions"])
-        print(mentions)
         return mentions
 
 

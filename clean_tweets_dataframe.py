@@ -1,4 +1,5 @@
 import pandas as pd
+from pandas.core.frame import DataFrame
 from extract_dataframe import read_json,TweetDfExtractor
 import re
 class Clean_Tweets:
@@ -71,5 +72,28 @@ class Clean_Tweets:
         def remove_hashtag_from_tweet(p)->str:
             text_with_mentions_removed= re.sub('(#[A-Za-z]+[A-Za-z0-9-_]+)', '', text)
             return text_with_mentions_removed
-        df["clean_text"]= df.clean_text.apply(remove_mention_from_tweet)
+        df["clean_text"]= df.clean_text.apply(remove_hashtag_from_tweet)
         return df
+    def remove_null(self,df:pd.DataFrame)->pd.DataFrame:
+            df.dropna(inplace=True)
+            return DataFrame
+
+
+
+
+
+
+if __name__ == "__main__":
+    # required column to be generated you should be creative and add more features
+    columns = ['created_at', 'source', 'original_text','clean_text', 'sentiment','polarity','subjectivity', 'lang', 'favorite_count', 'retweet_count', 
+    'original_author', 'screen_count', 'followers_count','friends_count','possibly_sensitive', 'hashtags', 'user_mentions', 'place', 'place_coord_boundaries']
+    _, tweet_list = read_json("data/covid19.json")
+    tweet = TweetDfExtractor(tweet_list)
+    tweet_df = tweet.get_tweet_df() 
+    clean_tweets=Clean_Tweets(tweet_df)
+
+    tweet_df=clean_tweets.remove_null(tweet_df)
+    clean_mentions=clean_tweets.remove_mentions_from_frame(tweet_df)
+
+    print(clean_mentions["clean_text"][:1])
+
