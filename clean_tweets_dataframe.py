@@ -1,6 +1,7 @@
 import pandas as pd
 from pandas.core.frame import DataFrame
 from extract_dataframe import read_json,TweetDfExtractor
+
 import re
 class Clean_Tweets:
     """
@@ -77,6 +78,20 @@ class Clean_Tweets:
     def remove_null(self,df:pd.DataFrame)->pd.DataFrame:
             df.dropna(inplace=True)
             return df
+    def clean_hashtags(self,df:pd.DataFrame)->pd.DataFrame:
+        def extract_hashtag(p)->list:
+            hashtags=[]
+            if len(p)>0:
+                for i in p:
+                    hashtags.append("#"+ i["text"])
+            return hashtags
+        df["hashtags"]=df.hashtags.apply(extract_hashtag)
+        return df
+    def convert_to_lists(self,df:pd.DataFrame)->pd.DataFrame:
+        df['clean_text'] =  df['clean_text'].to_list()
+        df['lang'] = df['lang'].to_list()
+        return df
+
 
 
 
@@ -84,13 +99,17 @@ class Clean_Tweets:
 
 
 if __name__ == "__main__":
-    # required column to be generated you should be creative and add more features
-    columns = ['created_at', 'source', 'original_text','clean_text', 'sentiment','polarity','subjectivity', 'lang', 'favorite_count', 'retweet_count', 
-    'original_author', 'screen_count', 'followers_count','friends_count','possibly_sensitive', 'hashtags', 'user_mentions', 'place', 'place_coord_boundaries']
-    _, tweet_list = read_json("data/covid19.json")
+    tweet_list = read_json("data/covid19.json")
     tweet = TweetDfExtractor(tweet_list)
     tweet_df = tweet.get_tweet_df() 
-    clean_tweets=Clean_Tweets(tweet_df)
+    # clean_tweets=Clean_Tweets(tweet_df)
 
     # tweet_df=clean_tweets.remove_null(tweet_df)
+
+    # clean_df= clean_tweets.clean_hashtags(tweet_df)
+    # clean_df= clean_tweets.remove_mentions_from_frame(clean_df)  
+    # clean_df= clean_tweets.remove_hastags_from_tweet(clean_df)
+    
+    # listed= clean_tweets.convert_to_lists(clean_df)
+
 

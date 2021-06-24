@@ -72,13 +72,20 @@ class TweetDfExtractor:
         
         created_at=[]
         for i in self.tweets_list:
-            created_at.append(i["created_at"])
+            try:
+                created_at.append(i["created_at"])
+            except TypeError:
+                created_at.append(None)
         return created_at
 
     def find_source(self)->list:
         source=[]
-        for i in self.tweets_list:
-            source.append(i["source"])
+        for i in self.tweets_list: 
+            try:   
+                source.append(i["source"])
+            except TypeError:
+                source.append(None)
+                continue
         return source
 
     def find_screen_name(self)->list:
