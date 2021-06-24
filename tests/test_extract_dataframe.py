@@ -74,7 +74,7 @@ class TestTweetDfExtractor(unittest.TestCase):
         self.assertEqual(self.df.find_retweet_count(), [612, 92, 1, 899, 20])
 
     def test_find_hashtags(self):
-        self.assertEqual(self.df.find_hashtags(), [[], [], ['red4research'], [], []])
+        self.assertEqual(self.df.find_hashtags(),[[], [], [{'text': 'red4research', 'indices': [103, 116]}], [], []])
 
     def test_find_mentions(self):
          self.assertEqual(self.df.find_mentions(), [[{'screen_name': 'TelGlobalHealth', 'name': 'Telegraph Global Health Security', 'id': 1149218984346230784, 'id_str': '1149218984346230784', 'indices': [3, 19]}, {'screen_name': 'WHOAFRO', 'name': 'WHO African Region', 'id': 544389588, 'id_str': '544389588', 'indices': [102, 110]}], [{'screen_name': 'globalhlthtwit', 'name': 'Anthony Costello', 'id': 83440337, 'id_str': '83440337', 'indices': 
