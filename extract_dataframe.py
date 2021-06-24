@@ -3,6 +3,17 @@ import pandas as pd
 import os
 import re
 from textblob import TextBlob
+import logging
+import sys
+
+
+logger = logging.getLogger()
+log_handler = logging.StreamHandler(sys.stdout)
+log_handler.setFormatter(logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s - %(funcName)s - line %(lineno)d"))
+
+logging.basicConfig(level=logging.INFO)
+log_handler.setLevel(logging.DEBUG)
+logger.addHandler(log_handler)
 
 def read_json(json_file: str)->list:
     """
@@ -46,16 +57,19 @@ class TweetDfExtractor:
         return statuses_count
         
     def find_full_text(self)->list:
+        logger.info("Extracting text")
         text=[]
         for i in self.tweets_list:
             try:
                 text.append(i["retweeted_status"]["extended_tweet"]["full_text"])
             except KeyError:
                 text.append(i["text"])
+                logger.error("Can't find full text")
         return text
        
     
     def find_sentiments(self, text)->list:
+        logger.info("Extracting sentiments")
         polarity=[]
         subjectivity=[]
         for i in self.tweets_list:
@@ -64,12 +78,14 @@ class TweetDfExtractor:
                 polarity.append(text.sentiment.polarity)
                 subjectivity.append (text.sentiment.subjectivity)
             except KeyError:
+                logger.error("Can't find full text")
                 polarity.append(None)
                 subjectivity.append(None)
         return polarity, subjectivity
 
     def find_created_time(self)->list:
         
+        logger.info("Extracting created time")
         created_at=[]
         for i in self.tweets_list:
             created_at.append(i["created_at"])
@@ -82,18 +98,23 @@ class TweetDfExtractor:
         return source
 
     def find_screen_name(self)->list:
+        
+        logger.info("Extracting original person")
         screen_name=[]
         for i in self.tweets_list:
             screen_name.append(i["user"]["screen_name"])
         return screen_name
 
     def find_followers_count(self)->list:
+        logger.info("Extracting follower count")
         followers_count=[]
         for i in self.tweets_list:
             followers_count.append(i["user"]["followers_count"])
         return followers_count
 
     def find_friends_count(self)->list:
+        
+        logger.info("Extracting friends count")
         friends_count=[]
         for i in self.tweets_list:
             friends_count.append(i["user"]["friends_count"])
@@ -106,29 +127,38 @@ class TweetDfExtractor:
                 is_sensitive.append(x['possibly_sensitive'])
             except KeyError:
                 is_sensitive.append(None)
+                
+                logger.error("Can't find sensitivity")
 
         return is_sensitive
 
     def find_favourite_count(self)->list:
+        logger.info("Extracting favorite count")
         favourite_count=[]
         for i in self.tweets_list:
             try:
                 favourite_count.append(i["retweeted_status"]["favorite_count"])
             except KeyError:
                 favourite_count.append(None)
+                
+                logger.error("Can't find favorite count")
         return favourite_count
     
     def find_retweet_count(self)->list:
+        logger.info("Extracting retweet count")
         retweet_count=[]
         for i in self.tweets_list:
             try:
                 retweet_count.append(int(i["retweeted_status"]["retweet_count"]))
             except KeyError:
                 retweet_count.append(0)
+                
+                logger.error("Can't find retweeted amount")
         return retweet_count
 
     def find_hashtags(self)->list:
         
+        logger.info("Extracting hashtags")
         hashtags=[]
         for i in self.tweets_list:
             hashtags.append(i["entities"]["hashtags"])
@@ -136,6 +166,7 @@ class TweetDfExtractor:
 
     def find_mentions(self)->list:
         
+        logger.info("Extracting mentions")
         mentions=[]
         for i in self.tweets_list:
             mentions.append(i["entities"]["user_mentions"])
@@ -143,22 +174,29 @@ class TweetDfExtractor:
 
 
     def find_location(self)->list:
+        
+        logger.info("Extracting locations")
         location=[]
         for i in self.tweets_list:
             try:
                 location.append(i['user']['location'])
             except TypeError:
-                location.append('')
+                location.append('')              
+                logger.error("Can't find tweet location")
         
         return location
 
     def find_lang(self)->list:
+        
+        logger.info("Extracting languages")
+        print("here")
         lang=[]
         for i in self.tweets_list:
             try:
                 lang.append(i['lang'])
             except TypeError:
                 lang.append('')
+                logger.error("Can't find language")
         return lang
     
     def find_clean_text(self)->list:
