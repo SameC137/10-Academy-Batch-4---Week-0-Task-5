@@ -1,1 +1,1 @@
-#The jupyter notebook is titled explor_tweet_data but contains all the implementation for both the exploration as well as for the modeling. The rest of the files are necessary for the functionality since they implement the retrival from the json as well as the cleaing. 
+<h1>The jupyter notebook is titled explor_tweet_data but contains all the implementation for both the exploration as well as for the modeling. The rest of the files are necessary for the functionality since they implement the retrival from the json as well as the cleaing. </h1>
