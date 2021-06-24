@@ -76,7 +76,7 @@ class Clean_Tweets:
         df["clean_text"]= df.clean_text.apply(remove_hashtag_from_tweet)
         return df
     def remove_null(self,df:pd.DataFrame)->pd.DataFrame:
-            df.dropna(inplace=True)
+            df.dropna(inplace=True,)
             return df
     def clean_hashtags(self,df:pd.DataFrame)->pd.DataFrame:
         def extract_hashtag(p)->list:
@@ -90,6 +90,7 @@ class Clean_Tweets:
     def convert_to_lists(self,df:pd.DataFrame)->pd.DataFrame:
         df['clean_text'] =  df['clean_text'].to_list()
         df['lang'] = df['lang'].to_list()
+        df['hashtags'] = df['hastags'].to_list()
         return df
 
 
@@ -99,17 +100,17 @@ class Clean_Tweets:
 
 
 if __name__ == "__main__":
-    tweet_list = read_json("data/covid19.json")
+    _, tweet_list = read_json("data/covid19.json")
     tweet = TweetDfExtractor(tweet_list)
     tweet_df = tweet.get_tweet_df() 
-    # clean_tweets=Clean_Tweets(tweet_df)
+    clean_tweets=Clean_Tweets(tweet_df)
 
-    # tweet_df=clean_tweets.remove_null(tweet_df)
+    tweet_df=clean_tweets.remove_null(tweet_df)
 
-    # clean_df= clean_tweets.clean_hashtags(tweet_df)
-    # clean_df= clean_tweets.remove_mentions_from_frame(clean_df)  
-    # clean_df= clean_tweets.remove_hastags_from_tweet(clean_df)
+    clean_df= clean_tweets.clean_hashtags(tweet_df)
+    clean_df= clean_tweets.remove_mentions_from_frame(clean_df)  
+    clean_df= clean_tweets.remove_hastags_from_tweet(clean_df)
     
-    # listed= clean_tweets.convert_to_lists(clean_df)
+    listed= clean_tweets.convert_to_lists(clean_df)
 
 
