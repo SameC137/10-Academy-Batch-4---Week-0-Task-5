@@ -64,19 +64,19 @@ class Clean_Tweets:
         return df
     def remove_mentions_from_frame(self,df:pd.DataFrame)->pd.DataFrame:
         def remove_mention_from_tweet(p)->str:
-            text_with_mentions_removed= re.sub('(@[A-Za-z]+[A-Za-z0-9-_]+)', '', text)
+            text_with_mentions_removed= re.sub('(@[A-Za-z]+[A-Za-z0-9-_]+)', '', p)
             return text_with_mentions_removed
-        df["clean_text"]= df.full_text.apply(remove_mention_from_tweet)
+        df["clean_text"]= df.original_text.apply(remove_mention_from_tweet)
         return df
     def remove_hastags_from_tweet(self,df:pd.DataFrame)->pd.DataFrame:
         def remove_hashtag_from_tweet(p)->str:
-            text_with_mentions_removed= re.sub('(#[A-Za-z]+[A-Za-z0-9-_]+)', '', text)
+            text_with_mentions_removed= re.sub('(#[A-Za-z]+[A-Za-z0-9-_]+)', '', p)
             return text_with_mentions_removed
         df["clean_text"]= df.clean_text.apply(remove_hashtag_from_tweet)
         return df
     def remove_null(self,df:pd.DataFrame)->pd.DataFrame:
             df.dropna(inplace=True)
-            return DataFrame
+            return df
 
 
 
@@ -92,8 +92,5 @@ if __name__ == "__main__":
     tweet_df = tweet.get_tweet_df() 
     clean_tweets=Clean_Tweets(tweet_df)
 
-    tweet_df=clean_tweets.remove_null(tweet_df)
-    clean_mentions=clean_tweets.remove_mentions_from_frame(tweet_df)
-
-    print(clean_mentions["clean_text"][:1])
+    # tweet_df=clean_tweets.remove_null(tweet_df)
 

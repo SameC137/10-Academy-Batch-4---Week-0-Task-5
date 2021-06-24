@@ -1,6 +1,7 @@
 import json
 import pandas as pd
 import os
+import re
 from textblob import TextBlob
 
 def read_json(json_file: str)->list:
@@ -159,6 +160,17 @@ class TweetDfExtractor:
             except TypeError:
                 lang.append('')
         return lang
+    
+    def find_clean_text(self)->list:
+        def remove_mention_from_tweet(p)->str:
+            text_with_mentions_removed= re.sub('(@[A-Za-z]+[A-Za-z0-9-_]+)', '', p)
+            return text_with_mentions_removed
+        def remove_hashtag_from_tweet(p)->str:
+            text_with_hashtag_removed= re.sub('(#[A-Za-z]+[A-Za-z0-9-_]+)', '', p)
+            return text_with_hashtag_removed
+        return []
+
+        
     
         
         
