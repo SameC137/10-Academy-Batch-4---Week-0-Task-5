@@ -1,6 +1,7 @@
 import pandas as pd
 from pandas.core.frame import DataFrame
 from extract_dataframe import read_json,TweetDfExtractor
+import string
 
 import re
 class Clean_Tweets:
@@ -90,9 +91,14 @@ class Clean_Tweets:
     def convert_to_lists(self,df:pd.DataFrame)->pd.DataFrame:
         df['clean_text'] =  df['clean_text'].to_list()
         df['lang'] = df['lang'].to_list()
-        df['hashtags'] = df['hastags'].to_list()
+        df['hashtags'] = df['hashtags'].to_list()
         return df
+    def convert_to_str(self,df:pd.DataFrame)->pd.DataFrame:
 
+        df['clean_text']=df['clean_text'].astype(str)
+        df['clean_text'] = df['clean_text'].apply(lambda x: x.lower())
+        df['clean_text']= df['clean_text'].apply(lambda x: x.translate(str.maketrans(' ', ' ', string.punctuation)))
+        return df
 
 
 
