@@ -199,14 +199,6 @@ class TweetDfExtractor:
                 logger.error("Can't find language")
         return lang
     
-    def find_clean_text(self)->list:
-        def remove_mention_from_tweet(p)->str:
-            text_with_mentions_removed= re.sub('(@[A-Za-z]+[A-Za-z0-9-_]+)', '', p)
-            return text_with_mentions_removed
-        def remove_hashtag_from_tweet(p)->str:
-            text_with_hashtag_removed= re.sub('(#[A-Za-z]+[A-Za-z0-9-_]+)', '', p)
-            return text_with_hashtag_removed
-        return []
 
         
     
