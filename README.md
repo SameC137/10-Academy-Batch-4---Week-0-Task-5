@@ -6,6 +6,7 @@
     extract_dataframe-contains code for extracting the dataframe from the json file
     processed_tweet_data-contains csv for cleaned data
     save_tweet_data_to_database-contains the code for creating/inserting/fetching data to database
+     visualize_tweet_data-contains code for visualizing the twitter data using streamlit
     .travis.yml- contains configuration for travis CI
     requirements.txt-contains required list of libraries for running the scripts
     data-folder containing data files
