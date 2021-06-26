@@ -90,7 +90,7 @@ def stBarChart():
     dfCount = dfCount.sort_values("Tweet_count", ascending=False)
 
     num = st.slider("Select number of Rankings", 0, 50, 5)
-    title = f"Top {num} Ranking By Number of tweets"
+    title = f"Top {num} Author Ranking By Number of tweets"
     barChart(dfCount.head(num), title, "original_author", "Tweet_count")
 
 def hashtagBarChart():
@@ -111,7 +111,7 @@ def hashtagBarChart():
     dfCount = dfCount.sort_values("Tweet_count", ascending=False)
 
     num = st.slider("Select number of Rankings", 0, 50, 5, key="1")
-    title = f"Top {num} Ranking By Number of tweets"
+    title = f"Top {num} Ranking Hashtags By Number of tweets"
 
     barChart(dfCount.head(num), title, "hashtag", "Tweet_count")
 
