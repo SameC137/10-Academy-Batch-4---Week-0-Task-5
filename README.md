@@ -16,6 +16,14 @@
         test_extract_dataframe-contains test cases to test the extraction of the dataframe
 
 
+
+[vis]: https://github.com/SameC137/10-Academy-Batch-4---Week-0-Task-5/blob/main/visualization.png "Visualization 1"
+[vis]: https://github.com/SameC137/10-Academy-Batch-4---Week-0-Task-5/blob/main/newplot%20(1).png "Visualization 2"
+[vis]: https://github.com/SameC137/10-Academy-Batch-4---Week-0-Task-5/blob/main/newplot%20(2).png "Visualization 3"
+[vis]: https://github.com/SameC137/10-Academy-Batch-4---Week-0-Task-5/blob/main/newplot.png "Visualization 4"
+[vis]: https://github.com/SameC137/10-Academy-Batch-4---Week-0-Task-5/blob/main/visualization%20(1).png "Visualization 5"
+[vis]: https://github.com/SameC137/10-Academy-Batch-4---Week-0-Task-5/blob/main/2f7c83b55d4897d9f033bab638e79decfa09ab56c575a9720f15b79b.jpeg?raw=true "Word Cloud"
+
 ### So here are the bare minimum requirement for completing this task
 
 1. Fork repository to your github account
