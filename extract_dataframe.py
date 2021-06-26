@@ -181,7 +181,7 @@ class TweetDfExtractor:
             try:
                 location.append(i['user']['location'])
             except TypeError:
-                location.append('')              
+                location.append(None)              
                 logger.error("Can't find tweet location")
         
         return location
@@ -195,7 +195,7 @@ class TweetDfExtractor:
             try:
                 lang.append(i['lang'])
             except TypeError:
-                lang.append('')
+                lang.append(None)
                 logger.error("Can't find language")
         return lang
     

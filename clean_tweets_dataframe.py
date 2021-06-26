@@ -85,7 +85,7 @@ class Clean_Tweets:
             if len(p)>0:
                 for i in p:
                     hashtags.append("#"+ i["text"])
-            return str(hashtags)
+            return hashtags
         df["hashtags"]=df.hashtags.apply(extract_hashtag)
         return df
 
@@ -95,14 +95,15 @@ class Clean_Tweets:
             if len(p)>0:
                 for i in p:
                     mentions.append("@"+ i["screen_name"])
-            return str(mentions)
+            return mentions
         df["user_mentions"]=df.user_mentions.apply(extract_mentions)
         return df
 
     def convert_to_lists(self,df:pd.DataFrame)->pd.DataFrame:
         df['clean_text'] =  df['clean_text'].to_list()
         df['lang'] = df['lang'].to_list()
-        df['hashtags'] = df['hashtags'].to_list()
+        df['hashtags'] = df['hashtags'].to_list()    
+        df['user_mentions'] = df['user_mentions'].to_list()
         return df
     def convert_to_str(self,df:pd.DataFrame)->pd.DataFrame:
 

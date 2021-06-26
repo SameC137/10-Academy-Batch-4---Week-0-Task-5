@@ -64,7 +64,7 @@ def preprocess_df(df: pd.DataFrame) -> pd.DataFrame:
     cols_2_drop = ['original_text',"possibly_sensitive"]
     try:
         df = df.drop(columns=cols_2_drop, axis=1)
-        df = df.fillna(0)
+        df = df.fillna("NULL")
     except KeyError as e:
         logger.error("Error:", e)
 
@@ -81,7 +81,7 @@ def insert_to_tweet_table(dbName: str, df: pd.DataFrame, table_name: str) -> Non
                     favorite_count, retweet_count, original_author, followers_count, friends_count,
                     hashtags, user_mentions, place, clean_text)
              VALUES( %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);"""
-        data = (row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7], row[8], row[9], row[10], row[11],
+        data = (row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7], row[8], row[9], str(row[10]), str(row[11]),
                 row[12], row[13])
 
         try:
@@ -128,24 +128,24 @@ if __name__ == "__main__":
     emojiDB(dbName='Tweets')
     createTables(dbName='Tweets')
 
-    # _, tweet_list = read_json("data/covid19.json")
-    # tweet = TweetDfExtractor(tweet_list)
-    # tweet_df = tweet.get_tweet_df() 
+    _, tweet_list = read_json("data/covid19.json")
+    tweet = TweetDfExtractor(tweet_list)
+    tweet_df = tweet.get_tweet_df() 
     
-    # clean_tweets=Clean_Tweets(tweet_df)
-    # clean_df= clean_tweets.clean_hashtags(tweet_df)
-    # clean_df= clean_tweets.clean_mentions(tweet_df)
-    # clean_df= clean_tweets.remove_mentions_from_frame(clean_df)  
-    # clean_df= clean_tweets.remove_hastags_from_tweet(clean_df)
-    # clean_df=clean_tweets.convert_to_numbers(clean_df)
+    clean_tweets=Clean_Tweets(tweet_df)
+    clean_df= clean_tweets.clean_hashtags(tweet_df)
+    clean_df= clean_tweets.clean_mentions(tweet_df)
+    clean_df= clean_tweets.remove_mentions_from_frame(clean_df)  
+    clean_df= clean_tweets.remove_hastags_from_tweet(clean_df)
+    clean_df=clean_tweets.convert_to_numbers(clean_df)
     # clean_df=clean_tweets.convert_to_datetime(clean_df)
     
-    # df=clean_tweets.convert_to_str(clean_df)
-    # df= clean_tweets.convert_to_lists(clean_df)
+    df=clean_tweets.convert_to_str(clean_df)
+    df= clean_tweets.convert_to_lists(clean_df)
     
-    # df.to_csv('processed_tweet_data.csv', index=False)
+    df.to_csv('processed_tweet_data.csv', index=False)
     
-    df = pd.read_csv('processed_tweet_data.csv')
+    # df = pd.read_csv('processed_tweet_data.csv')
     
 
     insert_to_tweet_table(dbName='Tweets', df=df, table_name='TweetData')
